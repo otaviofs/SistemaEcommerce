@@ -10,8 +10,9 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import model.dao.ClienteDao;
-import model.dao.ClienteDao;
+import model.dao.ClienteDaoImpl;
 import model.domain.Cliente;
+import model.service.ServiceLocator;
 import org.jdesktop.observablecollections.ObservableCollections;
 import util.ValidacaoException;
 
@@ -28,13 +29,13 @@ public class ClienteControl {
     
     private Cliente clienteSelecionado;
     
-    private List<Cliente> clienteTabela;
+    private List<Cliente> clientesTabela;
     
     private final ClienteDao clienteDao;
     
     public ClienteControl(){
-        clienteDao = new ClienteDao();
-        clienteTabela = ObservableCollections.observableList(clienteTabela =
+        clienteDao = ServiceLocator.getClienteDao();
+        clientesTabela = ObservableCollections.observableList(clientesTabela =
                 new ArrayList<>());
         novo();
         pesquisar();
@@ -45,19 +46,19 @@ public class ClienteControl {
     }
 
     public void pesquisar() {
-        clienteTabela.clear();
-        clienteTabela.addAll(ClienteDao.pesquisar(clienteDigitado));
+        clientesTabela.clear();
+        clientesTabela.addAll(clienteDao.pesquisar(clienteDigitado));
     }
     
     public void salvar() throws ValidacaoException{
         clienteDigitado.validar();
-        ClienteDao.salvarAtualizar(clienteDigitado);
+        clienteDao.salvarAtualizar(clienteDigitado);
         novo();
         pesquisar();
     }
     
     public void excluir(){
-        ClienteDao.excluir(clienteDigitado);
+        clienteDao.excluir(clienteDigitado);
         novo();
         pesquisar();
     }
@@ -85,11 +86,11 @@ public class ClienteControl {
     }
 
     public List<Cliente> getClienteTabela() {
-        return clienteTabela;
+        return clientesTabela;
     }
 
     public void setClienteTabela(List<Cliente> clienteTabela) {
-        this.clienteTabela = clienteTabela;
+        this.clientesTabela = clienteTabela;
     }
     
      public void addPropertyChangeListener(PropertyChangeListener e) {

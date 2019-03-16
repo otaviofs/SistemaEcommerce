@@ -213,13 +213,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if(JOptionPane.showConfirmDialog(this, 
-                "Deseja realmente excluir o cliente?",
+        if(JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o cliente?",
                 "Excluir o cliente",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 clienteControl.excluir();
                 JOptionPane.showMessageDialog(this,"Cliente excluido com sucesso",
                         "Excluir cliente",JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed

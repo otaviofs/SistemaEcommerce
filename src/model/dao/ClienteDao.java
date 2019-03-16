@@ -6,55 +6,18 @@
 package model.dao;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import model.domain.Cliente;
-
 
 /**
  *
  * @author otavi
  */
-public class ClienteDao {
-   
-    public static void salvarAtualizar (Cliente cliente ) {
-        EntityManager em = Conexao.getEntityManager();
-        em.getTransaction().begin();
-        if(cliente.getCodigo() != null) {
-           cliente = em.merge(cliente);
-        }
-        em.persist(cliente);
-        em.getTransaction().commit();
-        em.close();
-    }
-    
-    public static void excluir (Cliente cliente ) {
-        EntityManager em = Conexao.getEntityManager();
-        em.getTransaction().begin();
-        cliente = em.merge(cliente);
-        em.remove(cliente);
-        em.getTransaction().commit();
-        em.close();
-    }
-        
-    public static List<Cliente> pesquisar(Cliente cliente) {
-        EntityManager em = Conexao.getEntityManager();
-        StringBuilder sql = new StringBuilder("from Cliente c where 1 = 1");
-        if (cliente.getCodigo() != null){
-            sql.append("and c.codigo = :codigo ");
-        }
-        if (cliente.getNome() != null 
-                && cliente.getNome().equals("")){
-            sql.append(" and c.nome like :nome ");
-        }
-        Query query = em.createQuery(sql.toString());
-        if(cliente.getCodigo() != null){
-            query.setParameter("codigo",cliente.getCodigo());
-        }
-        if (cliente.getNome() != null && !cliente.getNome().equals("")){
-            query.setParameter("nome","%"+cliente.getNome()+"%");
-        }
-        return query.getResultList();
-    }
+public interface ClienteDao {
 
+    void excluir(Cliente cliente);
+
+    List<Cliente> pesquisar(Cliente cliente);
+
+    void salvarAtualizar(Cliente cliente);
+    
 }
